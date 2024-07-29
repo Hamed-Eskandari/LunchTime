@@ -8,4 +8,5 @@ export const routes: Routes = [
     { path: 'order', component: OrderComponent },
     { path: 'buyer', component: BuyerComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '**', redirectTo: '/passwords' }// Redirect to 'home' for any other unknown routes
 ];
