@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,6 +24,7 @@ import { RouterModule } from '@angular/router';
     MatFormFieldModule,
     MatTableModule,
     MatStepperModule,
+    FormsModule
   ],
 })
 export class BuyerComponent implements OnInit {
@@ -39,6 +40,18 @@ export class BuyerComponent implements OnInit {
     if (typeof window !== 'undefined' && window.localStorage) {
       this.orders = JSON.parse(localStorage.getItem('orders') || '[]');
     }
+    this.loadOrders();
+  }
+
+  loadOrders() {
+    const storedOrders = localStorage.getItem('orders');
+    if (storedOrders) {
+      this.orders = JSON.parse(storedOrders);
+    }
+  }
+  updatePrice(element: any, event: any) {
+    element.price = event.target.value;
+    localStorage.setItem('orders', JSON.stringify(this.orders));
   }
 
   printOrders() {
@@ -46,6 +59,8 @@ export class BuyerComponent implements OnInit {
   }
 
   finalizeOrders() {
+
+    localStorage.setItem('orders', JSON.stringify(this.orders));
     
   }
 }
