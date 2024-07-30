@@ -70,4 +70,12 @@ export class BuyerComponent implements OnInit {
       localStorage.setItem('orders', JSON.stringify(this.orders));
     }
   }
+  clearOrders() {
+    if (this.isBrowser) {
+      localStorage.removeItem('orders');
+      this.orders = [];
+    }
+    alert("Alle Daten in der Tabelle wurden gelöscht");
+  }
+
 }
