@@ -34,12 +34,12 @@
             <mat-label>Preis</mat-label>
             <input matInput type="number" formControlName="price">
           </mat-form-field>
-          <div>Begleiten Sie den Einkäufer?</div>
+          <div>Möchten Sie Ihre Bestellung bezahlen?</div>
           <mat-radio-group formControlName="paid">
             <mat-radio-button value="yes">Ja</mat-radio-button>
             <mat-radio-button value="no">Nein</mat-radio-button>
           </mat-radio-group>
-          <div>Haben Sie die Bestellung bezahlt?</div>
+          <div> Begleiten Sie den Einkäufer?</div>
           <mat-radio-group formControlName="accompany">
             <mat-radio-button value="yes">Ja</mat-radio-button>
             <mat-radio-button value="no">Nein</mat-radio-button>
@@ -60,6 +60,7 @@
         <p>Preis: {{ orderForm.controls['price'].value }}</p>
         <p>Bezahlt: {{ orderForm.controls['paid'].value }}</p>
         <p>Begleiten: {{ orderForm.controls['accompany'].value }}</p>
+        <a [href]="paypalLink" target="_blank" *ngIf="orderForm.controls['paid'].value ==='yes'">Mit PayPal bezahlen</a>
         <div class="actions">
           <button mat-button matStepperPrevious>Zurück</button>
           <button mat-button (click)="submitOrder()" matStepperNext>Bestätigen</button>
