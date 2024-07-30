@@ -1,20 +1,20 @@
 <div class="container">
   <mat-card>
     <mat-stepper linear>
-      <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup" (ngSubmit)="onSubmit()">
+      <mat-step>
+        <form [formGroup]="orderForm">
           <ng-template matStepLabel>Bestelldetails</ng-template>
           <mat-form-field appearance="fill">
             <mat-label>Name des Bestellers</mat-label>
             <input matInput formControlName="name" required>
-            <mat-error *ngIf="firstFormGroup.controls['name'].hasError('required')">
+            <mat-error *ngIf="orderForm.controls['name'].hasError('required')">
               Name des Bestellers ist erforderlich
             </mat-error>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Bestellung</mat-label>
             <textarea matInput formControlName="order" required maxlength="100"></textarea>
-            <mat-error *ngIf="firstFormGroup.controls['order'].hasError('required')">
+            <mat-error *ngIf="orderForm.controls['order'].hasError('required')">
               Bestellung ist erforderlich
             </mat-error>
             <mat-hint align="end">Maximal 100 Zeichen</mat-hint>
@@ -26,7 +26,7 @@
                 {{restaurant}}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="firstFormGroup.controls['restaurant'].hasError('required')">
+            <mat-error *ngIf="orderForm.controls['restaurant'].hasError('required')">
               Restaurant ist erforderlich
             </mat-error>
           </mat-form-field>
@@ -45,7 +45,8 @@
             <mat-radio-button value="no">Nein</mat-radio-button>
           </mat-radio-group>
           
-          <div>
+          <div class="actions">
+            <button mat-button routerLink="/">Zurück</button>
             <button mat-button matStepperNext>Weiter</button>
           </div>
         </form>
@@ -53,15 +54,15 @@
       <mat-step>
         <ng-template matStepLabel>Überprüfung</ng-template>
         <p>Bestellübersicht:</p>
-        <p>Name: {{ firstFormGroup.controls['name'].value }}</p>
-        <p>Bestellung: {{ firstFormGroup.controls['order'].value }}</p>
-        <p>Restaurant: {{ firstFormGroup.controls['restaurant'].value }}</p>
-        <p>Preis: {{ firstFormGroup.controls['price'].value }}</p>
-        <p>Bezahlt: {{ firstFormGroup.controls['paid'].value }}</p>
-        <p>Begleiten: {{ firstFormGroup.controls['accompany'].value }}</p>
-        <div>
+        <p>Name: {{ orderForm.controls['name'].value }}</p>
+        <p>Bestellung: {{ orderForm.controls['order'].value }}</p>
+        <p>Restaurant: {{ orderForm.controls['restaurant'].value }}</p>
+        <p>Preis: {{ orderForm.controls['price'].value }}</p>
+        <p>Bezahlt: {{ orderForm.controls['paid'].value }}</p>
+        <p>Begleiten: {{ orderForm.controls['accompany'].value }}</p>
+        <div class="actions">
           <button mat-button matStepperPrevious>Zurück</button>
-          <button mat-button (click)="submitOrder()">Bestätigen</button>
+          <button mat-button (click)="submitOrder()" matStepperNext>Bestätigen</button>
         </div>
       </mat-step>
       <mat-step>

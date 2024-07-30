@@ -1,1 +1,62 @@
-<p>buyer works!</p>
+<div class="container">
+  <mat-card>
+    <mat-stepper linear>
+      <mat-step>
+        <ng-template matStepLabel>Bestellübersicht</ng-template>
+        <table mat-table [dataSource]="orders" class="mat-elevation-z8">
+             <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+          <!-- Order Column -->
+          <ng-container matColumnDef="order">
+            <th mat-header-cell *matHeaderCellDef>Bestellung</th>
+            <td mat-cell *matCellDef="let element">{{ element.order }}</td>
+          </ng-container>
+          <!-- Restaurant Column -->
+          <ng-container matColumnDef="restaurant">
+            <th mat-header-cell *matHeaderCellDef>Restaurant</th>
+            <td mat-cell *matCellDef="let element">{{ element.restaurant }}</td>
+          </ng-container>
+          <!-- Price Column -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Preis </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="element.price; else editPrice">
+                {{element.price}}
+              </ng-container>
+              <ng-template #editPrice>
+                <input matInput  placeholder="Preis eingeben" type="number" (keyup.enter)="updatePrice(element, $event)">
+              </ng-template>
+            </td>
+          </ng-container>
+            <!-- Time Column -->
+          <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef>Zeit</th>
+            <td mat-cell *matCellDef="let element">{{ element.time }}</td>
+          </ng-container>
+          <!-- Header and Row Definitions -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <div class="actions">
+          <button mat-button routerLink="/">Zurück</button>
+          <button mat-button (click)="printOrders()">Drucken</button>
+          <button mat-button (click)="finalizeOrders()" matStepperNext>
+            Bestätigen
+          </button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Bestätigung</ng-template>
+        <p>Bestellübersicht wurde bestätigt.</p>
+        <div class="actions">
+            <button mat-button matStepperPrevious>Zurück</button>
+          <button mat-button routerLink="/">Zurück zur Startseite</button>
+          <button mat-button (click)="clearOrders()">Daten löschen</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </mat-card>
+</div>

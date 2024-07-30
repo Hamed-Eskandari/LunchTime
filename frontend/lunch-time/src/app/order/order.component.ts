@@ -35,35 +35,39 @@ import { RouterModule } from '@angular/router';
   ],
 })
 export class OrderComponent {
-  firstFormGroup: FormGroup;
-  restaurants: string[] = [
-    'Restaurant 1',
-    'Restaurant 2',
-    'Restaurant 3',
-    'Restaurant 4',
-    'Restaurant 5',
-  ];
+  orderForm: FormGroup;
+  restaurants: string[] = ['Restaurant 1', 'Restaurant 2', 'Restaurant 3', 'Restaurant 4', 'Restaurant 5'];
 
-  constructor(private _formBuilder: FormBuilder) {
-    this.firstFormGroup = this._formBuilder.group({
+  constructor(private fb: FormBuilder) {
+    this.orderForm = this.fb.group({
       name: ['', Validators.required],
-      order: ['', [Validators.required, Validators.maxLength(100)]],
+      order: ['', [Validators.required, Validators.maxLength(500)]],
       restaurant: ['', Validators.required],
       price: [''],
       paid: [''],
-      accompany: [''],
+      accompany: ['']
     });
   }
-  onSubmit() {
-    if (this.firstFormGroup.invalid) {
-      this.firstFormGroup.markAllAsTouched();
-      return;
-    }
-    this.submitOrder();
-  }
+
   submitOrder() {
-    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    orders.push(this.firstFormGroup.value);
-    localStorage.setItem('orders', JSON.stringify(orders));
+    if (this.orderForm.valid) {
+      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+      orders.push({ 
+        name: this.orderForm.get('name')?.value,
+        order: this.orderForm.get('order')?.value,
+        restaurant: this.orderForm.get('restaurant')?.value,
+        price: this.orderForm.get('price')?.value,
+        paid: this.orderForm.get('paid')?.value,
+        accompany: this.orderForm.get('accompany')?.value,
+        time: new Date().toLocaleTimeString()
+      });
+      localStorage.setItem('orders', JSON.stringify(orders));
+      this.orderForm.reset();
+    } else {
+      Object.keys(this.orderForm.controls).forEach(field => {
+        const control = this.orderForm.get(field);
+        control?.markAsTouched({ onlySelf: true });
+      });
+    }
   }
 }
