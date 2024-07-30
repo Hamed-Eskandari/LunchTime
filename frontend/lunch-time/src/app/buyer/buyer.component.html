@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <mat-stepper linear>
-      <mat-step [stepControl]="firstFormGroup">
+      <mat-step>
         <ng-template matStepLabel>Bestellübersicht</ng-template>
         <table mat-table [dataSource]="orders" class="mat-elevation-z8">
              <!-- Name Column -->
@@ -27,7 +27,7 @@
                 {{element.price}}
               </ng-container>
               <ng-template #editPrice>
-                <input matInput [(ngModel)]="element.price" placeholder="Preis eingeben" type="number" (keyup.enter)="updatePrice(element, $event)">
+                <input matInput  placeholder="Preis eingeben" type="number" (keyup.enter)="updatePrice(element, $event)">
               </ng-template>
             </td>
           </ng-container>

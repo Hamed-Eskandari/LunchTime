@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatStepperModule } from '@angular/material/stepper';
-import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -17,50 +17,57 @@ import { RouterModule } from '@angular/router';
   imports: [
     RouterModule,
     CommonModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatFormFieldModule,
     MatTableModule,
     MatStepperModule,
-    FormsModule
-  ],
+    MatInputModule,
+    MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCardModule
+  ]
 })
 export class BuyerComponent implements OnInit {
-  firstFormGroup: FormGroup;
   orders: any[] = [];
   displayedColumns: string[] = ['name', 'order', 'restaurant', 'price', 'time'];
+  firstFormGroup: FormGroup;
+  isBrowser: boolean;
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(private _formBuilder: FormBuilder, @Inject(PLATFORM_ID) private platformId: Object) {
     this.firstFormGroup = this._formBuilder.group({});
+    this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   ngOnInit(): void {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      this.orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    if (this.isBrowser) {
+      this.loadOrders();
     }
-    this.loadOrders();
   }
 
   loadOrders() {
-    const storedOrders = localStorage.getItem('orders');
-    if (storedOrders) {
-      this.orders = JSON.parse(storedOrders);
+    if (this.isBrowser) {
+      const storedOrders = localStorage.getItem('orders');
+      if (storedOrders) {
+        this.orders = JSON.parse(storedOrders);
+      }
     }
   }
+
   updatePrice(element: any, event: any) {
-    element.price = event.target.value;
-    localStorage.setItem('orders', JSON.stringify(this.orders));
+    if (this.isBrowser) {
+      element.price = event.target.value;
+      localStorage.setItem('orders', JSON.stringify(this.orders));
+    }
   }
 
   printOrders() {
-    window.print();
+    if (this.isBrowser) {
+      window.print();
+    }
   }
 
   finalizeOrders() {
-
-    localStorage.setItem('orders', JSON.stringify(this.orders));
-    
+    if (this.isBrowser) {
+      localStorage.setItem('orders', JSON.stringify(this.orders));
+    }
   }
 }
