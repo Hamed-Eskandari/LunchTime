@@ -42,6 +42,7 @@
         </table>
         <div class="actions">
           <button mat-button routerLink="/">Zurück</button>
+          <button mat-button (click)="printOrders()">Drucken</button>
           <button mat-button (click)="finalizeOrders()" matStepperNext>
             Bestätigen
           </button>
@@ -51,8 +52,8 @@
         <ng-template matStepLabel>Bestätigung</ng-template>
         <p>Bestellübersicht wurde bestätigt.</p>
         <div class="actions">
+            <button mat-button matStepperPrevious>Zurück</button>
           <button mat-button routerLink="/">Zurück zur Startseite</button>
-          <button mat-button (click)="printOrders()">Drucken</button>
           <button mat-button (click)="clearOrders()">Daten löschen</button>
         </div>
       </mat-step>
