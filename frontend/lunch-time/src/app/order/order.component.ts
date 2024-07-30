@@ -48,7 +48,17 @@ export class OrderComponent {
       accompany: ['']
     });
   }
-
+  get paypalLink(): string {
+    const price = this.orderForm.controls['price'].value;
+    if (!price || isNaN(price) || price <= 0) {
+      return ''; 
+    }
+    const businessEmail = 'hamed_eskandari71@yahoo.com'; 
+    const currencyCode = 'EUR'; 
+    const itemName = encodeURIComponent('Order Payment');
+    return `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(businessEmail)}&item_name=${itemName}&amount=${parseFloat(price).toFixed(2)}&currency_code=${currencyCode}`;
+  }
+  
   submitOrder() {
     if (this.orderForm.valid) {
       const orders = JSON.parse(localStorage.getItem('orders') || '[]');
