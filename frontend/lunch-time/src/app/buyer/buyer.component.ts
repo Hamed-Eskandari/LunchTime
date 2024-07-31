@@ -1,13 +1,14 @@
-import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-buyer',
@@ -23,7 +24,8 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatCardModule
+    MatCardModule,
+    MatPaginatorModule
   ]
 })
 export class BuyerComponent implements OnInit {
@@ -31,6 +33,9 @@ export class BuyerComponent implements OnInit {
   displayedColumns: string[] = ['name', 'order', 'restaurant', 'price', 'time'];
   firstFormGroup: FormGroup;
   isBrowser: boolean;
+  
+  dataSource = new MatTableDataSource<any>(this.orders);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private _formBuilder: FormBuilder, @Inject(PLATFORM_ID) private platformId: Object) {
     this.firstFormGroup = this._formBuilder.group({});
@@ -43,11 +48,16 @@ export class BuyerComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   loadOrders() {
     if (this.isBrowser) {
       const storedOrders = localStorage.getItem('orders');
       if (storedOrders) {
         this.orders = JSON.parse(storedOrders);
+        this.dataSource.data = this.orders;
       }
     }
   }
@@ -70,12 +80,14 @@ export class BuyerComponent implements OnInit {
       localStorage.setItem('orders', JSON.stringify(this.orders));
     }
   }
+
   clearOrders() {
     if (this.isBrowser) {
       localStorage.removeItem('orders');
       this.orders = [];
+      this.dataSource.data = [];
     }
     alert("Alle Daten in der Tabelle wurden gelöscht");
   }
-
 }
+
