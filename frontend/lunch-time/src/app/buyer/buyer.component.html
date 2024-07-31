@@ -49,6 +49,16 @@
               <th mat-header-cell *matHeaderCellDef>Zeit</th>
               <td mat-cell *matCellDef="let element">{{ element.time }}</td>
             </ng-container>
+              <!-- Paid Column -->
+              <ng-container matColumnDef="paid">
+                <th mat-header-cell *matHeaderCellDef>Bezahlt</th>
+                <td mat-cell *matCellDef="let element">{{ element.paid }}</td>
+              </ng-container>
+              <!-- Accompany Column -->
+              <ng-container matColumnDef="accompany">
+                <th mat-header-cell *matHeaderCellDef>Begleitung</th>
+                <td mat-cell *matCellDef="let element">{{ element.accompany }}</td>
+              </ng-container>
             <!-- Header and Row Definitions -->
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
