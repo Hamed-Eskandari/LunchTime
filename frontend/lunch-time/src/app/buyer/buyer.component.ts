@@ -30,7 +30,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 })
 export class BuyerComponent implements OnInit {
   orders: any[] = [];
-  displayedColumns: string[] = ['name', 'order', 'restaurant', 'price', 'time'];
+  displayedColumns: string[] = ['name', 'order', 'restaurant', 'price', 'day', 'time'];
   firstFormGroup: FormGroup;
   isBrowser: boolean;
   
