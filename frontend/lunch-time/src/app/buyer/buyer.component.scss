@@ -1,3 +1,14 @@
+.table-container {
+  max-height: 400px;
+  overflow: auto; 
+
+}
+
+table {
+  min-width: 800px;
+  width: 100%;
+}
+
 .container {
     display: flex;
     justify-content: center;
