@@ -3,7 +3,7 @@
     <mat-stepper linear>
       <mat-step>
         <ng-template matStepLabel>Bestellübersicht</ng-template>
-        <table mat-table [dataSource]="orders" class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
              <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -40,6 +40,7 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
         <div class="actions">
           <button mat-button routerLink="/">Zurück</button>
           <button mat-button (click)="printOrders()">Drucken</button>
