@@ -58,7 +58,7 @@
         <p>Bestellung: {{ orderForm.controls['order'].value }}</p>
         <p>Restaurant: {{ orderForm.controls['restaurant'].value }}</p>
         <p>Preis: {{ orderForm.controls['price'].value }}</p>
-        <p>Bezahlt: {{ orderForm.controls['paid'].value }}</p>
+        <p>wird bezahlt: {{ orderForm.controls['paid'].value }}</p>
         <p>Begleiten: {{ orderForm.controls['accompany'].value }}</p>
         <a [href]="paypalLink" target="_blank" *ngIf="orderForm.controls['paid'].value ==='yes'">Mit PayPal bezahlen</a>
         <div class="actions">
