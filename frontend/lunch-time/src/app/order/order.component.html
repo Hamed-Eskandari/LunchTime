@@ -74,9 +74,12 @@
           </mat-radio-group>
 
           <div class="actions">
-            <button mat-button routerLink="/">Zurück</button>
-            <button mat-button matStepperNext (click)="checkPaidField()">
+            <button mat-raised-button routerLink="/">
+              <mat-icon>arrow_back</mat-icon>Zurück
+            </button>
+            <button mat-raised-button matStepperNext (click)="checkPaidField()">
               Weiter
+              <mat-icon>arrow_forward</mat-icon>
             </button>
           </div>
         </form>
@@ -97,8 +100,11 @@
           >Mit PayPal bezahlen</a
         >
         <div class="actions">
-          <button mat-button matStepperPrevious>Zurück</button>
-          <button mat-button (click)="submitOrder()" matStepperNext>
+          <button mat-raised-button matStepperPrevious>
+            <mat-icon>arrow_back</mat-icon>Zurück
+          </button>
+          <button mat-raised-button (click)="submitOrder()" matStepperNext>
+            <mat-icon>check</mat-icon>
             Bestätigen
           </button>
         </div>
@@ -106,7 +112,9 @@
       <mat-step>
         <ng-template matStepLabel>Bestellung abgeschlossen</ng-template>
         <p>Ihre Bestellung wurde erfolgreich aufgegeben.</p>
-        <button mat-button routerLink="/">Zur Startseite</button>
+        <button mat-raised-button routerLink="/">
+          <mat-icon>home</mat-icon>Zur Startseite
+        </button>
       </mat-step>
     </mat-stepper>
   </mat-card>

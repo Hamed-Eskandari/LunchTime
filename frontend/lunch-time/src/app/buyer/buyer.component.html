@@ -49,16 +49,18 @@
               <th mat-header-cell *matHeaderCellDef>Zeit</th>
               <td mat-cell *matCellDef="let element">{{ element.time }}</td>
             </ng-container>
-              <!-- Paid Column -->
-              <ng-container matColumnDef="paid">
-                <th mat-header-cell *matHeaderCellDef>Bezahlt</th>
-                <td mat-cell *matCellDef="let element">{{ element.paid }}</td>
-              </ng-container>
-              <!-- Accompany Column -->
-              <ng-container matColumnDef="accompany">
-                <th mat-header-cell *matHeaderCellDef>Begleitung</th>
-                <td mat-cell *matCellDef="let element">{{ element.accompany }}</td>
-              </ng-container>
+            <!-- Paid Column -->
+            <ng-container matColumnDef="paid">
+              <th mat-header-cell *matHeaderCellDef>Bezahlt</th>
+              <td mat-cell *matCellDef="let element">{{ element.paid }}</td>
+            </ng-container>
+            <!-- Accompany Column -->
+            <ng-container matColumnDef="accompany">
+              <th mat-header-cell *matHeaderCellDef>Begleitung</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.accompany }}
+              </td>
+            </ng-container>
             <!-- Header and Row Definitions -->
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
@@ -69,10 +71,17 @@
           showFirstLastButtons
         ></mat-paginator>
         <div class="actions">
-          <button mat-button routerLink="/">Zurück</button>
-          <button mat-button (click)="printOrders()">Drucken</button>
-          <button mat-button (click)="downloadCSV()">herunterladen</button>
-          <button mat-button (click)="finalizeOrders()" matStepperNext>
+          <button mat-raised-button routerLink="/">
+            <mat-icon>arrow_back</mat-icon>Zurück
+          </button>
+          <button mat-raised-button (click)="printOrders()">
+            <mat-icon>print</mat-icon>Drucken
+          </button>
+          <button mat-raised-button (click)="downloadCSV()">
+            <mat-icon>download</mat-icon>herunterladen
+          </button>
+          <button mat-raised-button (click)="finalizeOrders()" matStepperNext>
+            <mat-icon>check</mat-icon>
             Bestätigen
           </button>
         </div>
@@ -81,9 +90,15 @@
         <ng-template matStepLabel>Bestätigung</ng-template>
         <p>Bestellübersicht wurde bestätigt.</p>
         <div class="actions">
-          <button mat-button matStepperPrevious>Zurück</button>
-          <button mat-button routerLink="/">Zurück zur Startseite</button>
-          <button mat-button (click)="clearOrders()">Daten löschen</button>
+          <button mat-raised-button matStepperPrevious>
+            <mat-icon>arrow_back</mat-icon>Zurück
+          </button>
+          <button mat-raised-button routerLink="/">
+            <mat-icon>home</mat-icon> Zurück zur Startseite
+          </button>
+          <button mat-raised-button (click)="clearOrders()">
+            <mat-icon>delete</mat-icon>Daten löschen
+          </button>
         </div>
       </mat-step>
     </mat-stepper>
