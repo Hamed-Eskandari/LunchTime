@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-buyer',
@@ -25,7 +26,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
     FormsModule,
     ReactiveFormsModule,
     MatCardModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatIconModule
   ]
 })
 export class BuyerComponent implements OnInit {

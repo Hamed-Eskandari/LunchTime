@@ -15,6 +15,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-order',
@@ -32,6 +33,7 @@ import { RouterModule } from '@angular/router';
     MatSelectModule,
     CommonModule,
     RouterModule,
+    MatIconModule
   ],
 })
 export class OrderComponent {
