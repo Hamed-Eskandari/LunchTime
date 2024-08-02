@@ -16,6 +16,9 @@ import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
+import { AlertDialogComponent } from '../components/alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-buyer',
@@ -57,7 +60,8 @@ export class BuyerComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private dialog: MatDialog
   ) {
     this.firstFormGroup = this._formBuilder.group({});
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -103,17 +107,20 @@ export class BuyerComponent implements OnInit {
   }
 
   clearOrders() {
-    if (this.isBrowser) {
-      const confirmed = window.confirm(
-        'Sind Sie sicher, dass Sie die Daten der Tabelle löschen möchten?'
-      );
-      if (confirmed) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { message: 'Sind Sie sicher, dass Sie die Daten löschen möchten?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
         localStorage.removeItem('orders');
         this.orders = [];
         this.dataSource.data = [];
-        alert('Alle Daten in der Tabelle wurden gelöscht');
+        this.dialog.open(AlertDialogComponent, {
+          data: { message: 'Alle Daten wurden gelöscht.' }
+        });
       }
-    }
+    });
   }
 
   downloadCSV() {
