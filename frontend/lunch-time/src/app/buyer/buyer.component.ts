@@ -32,7 +32,7 @@ import {MatIconModule} from '@angular/material/icon';
 })
 export class BuyerComponent implements OnInit {
   orders: any[] = [];
-  displayedColumns: string[] = ['name', 'order', 'restaurant', 'price', 'day', 'time','paid', 'accompany'];
+  displayedColumns: string[] = ['index','name', 'order', 'restaurant', 'price', 'day', 'time','paid', 'accompany'];
   firstFormGroup: FormGroup;
   isBrowser: boolean;
   
@@ -85,11 +85,14 @@ export class BuyerComponent implements OnInit {
 
   clearOrders() {
     if (this.isBrowser) {
-      localStorage.removeItem('orders');
-      this.orders = [];
-      this.dataSource.data = [];
+      const confirmed = window.confirm("Sind Sie sicher, dass Sie die Daten der Tabelle löschen möchten?");
+      if (confirmed) {
+        localStorage.removeItem('orders');
+        this.orders = [];
+        this.dataSource.data = [];
+        alert("Alle Daten in der Tabelle wurden gelöscht");
+      }
     }
-    alert("Alle Daten in der Tabelle wurden gelöscht");
   }
 
   downloadCSV() {
