@@ -1,4 +1,10 @@
-import { Component, Inject, PLATFORM_ID, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  Inject,
+  PLATFORM_ID,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -9,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-buyer',
@@ -27,19 +33,32 @@ import {MatIconModule} from '@angular/material/icon';
     ReactiveFormsModule,
     MatCardModule,
     MatPaginatorModule,
-    MatIconModule
-  ]
+    MatIconModule,
+  ],
 })
 export class BuyerComponent implements OnInit {
   orders: any[] = [];
-  displayedColumns: string[] = ['name', 'order', 'restaurant', 'price', 'day', 'time','paid', 'accompany'];
+  displayedColumns: string[] = [
+    'index',
+    'name',
+    'order',
+    'restaurant',
+    'price',
+    'day',
+    'time',
+    'paid',
+    'accompany',
+  ];
   firstFormGroup: FormGroup;
   isBrowser: boolean;
-  
+
   dataSource = new MatTableDataSource<any>(this.orders);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _formBuilder: FormBuilder, @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    private _formBuilder: FormBuilder,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     this.firstFormGroup = this._formBuilder.group({});
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
@@ -85,11 +104,16 @@ export class BuyerComponent implements OnInit {
 
   clearOrders() {
     if (this.isBrowser) {
-      localStorage.removeItem('orders');
-      this.orders = [];
-      this.dataSource.data = [];
+      const confirmed = window.confirm(
+        'Sind Sie sicher, dass Sie die Daten der Tabelle löschen möchten?'
+      );
+      if (confirmed) {
+        localStorage.removeItem('orders');
+        this.orders = [];
+        this.dataSource.data = [];
+        alert('Alle Daten in der Tabelle wurden gelöscht');
+      }
     }
-    alert("Alle Daten in der Tabelle wurden gelöscht");
   }
 
   downloadCSV() {
@@ -107,8 +131,7 @@ export class BuyerComponent implements OnInit {
 
   convertToCSV(objArray: any[]) {
     const header = Object.keys(objArray[0]).join(',');
-    const rows = objArray.map(obj => Object.values(obj).join(','));
+    const rows = objArray.map((obj) => Object.values(obj).join(','));
     return [header, ...rows].join('\r\n');
   }
 }
-

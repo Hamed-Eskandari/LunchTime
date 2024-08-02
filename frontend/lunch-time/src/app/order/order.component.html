@@ -86,19 +86,21 @@
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Überprüfung</ng-template>
-        <p>Bestellübersicht:</p>
-        <p>Name: {{ orderForm.controls["name"].value }}</p>
-        <p>Bestellung: {{ orderForm.controls["order"].value }}</p>
-        <p>Restaurant: {{ orderForm.controls["restaurant"].value }}</p>
-        <p>Preis: {{ orderForm.controls["price"].value }}</p>
-        <p>wird bezahlt: {{ orderForm.controls["paid"].value }}</p>
-        <p>Begleiten: {{ orderForm.controls["accompany"].value }}</p>
-        <a
-          [href]="paypalLink"
-          target="_blank"
-          *ngIf="orderForm.controls['paid'].value === 'yes'"
-          >Mit PayPal bezahlen</a
-        >
+        <div class="center-content">
+          <p style="color:#66b2b2"><b> Bestellübersicht</b></p>
+          <p><b>Name:</b> {{ orderForm.controls["name"].value }}</p>
+          <p><b>Bestellung:</b> {{ orderForm.controls["order"].value }}</p>
+          <p><b>Restaurant:</b> {{ orderForm.controls["restaurant"].value }}</p>
+          <p><b>Preis:</b> {{ orderForm.controls["price"].value }}</p>
+          <p><b>wird bezahlt:</b> {{ orderForm.controls["paid"].value }}</p>
+          <p><b>Begleiten:</b> {{ orderForm.controls["accompany"].value }}</p>
+          <a
+            [href]="paypalLink"
+            target="_blank"
+            *ngIf="orderForm.controls['paid'].value === 'yes'"
+            >Mit PayPal bezahlen</a
+          >
+        </div>
         <div class="actions">
           <button mat-raised-button matStepperPrevious>
             <mat-icon>arrow_back</mat-icon>Zurück
@@ -111,7 +113,7 @@
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Bestellung abgeschlossen</ng-template>
-        <p>Ihre Bestellung wurde erfolgreich aufgegeben.</p>
+        <p style="color:#66b2b2"><b> Bestellung wurde erfolgreich aufgegeben.</b></p>
         <button mat-raised-button routerLink="/">
           <mat-icon>home</mat-icon>Zur Startseite
         </button>
