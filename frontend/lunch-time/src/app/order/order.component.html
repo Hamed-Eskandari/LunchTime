@@ -1,7 +1,10 @@
-<div class="container">
+<div class="container" *ngIf="isBrowser">
   <mat-card>
     <mat-stepper linear>
       <mat-step [stepControl]="orderForm">
+        <div *ngIf="ordersConfirmed" class="confirmation-message">
+          <p>Bestellungen wurden vom Käufer bestätigt!!!!</p>
+        </div>
         <form [formGroup]="orderForm">
           <ng-template matStepLabel>Bestelldetails</ng-template>
           <mat-form-field appearance="fill">
@@ -83,9 +86,6 @@
             </button>
           </div>
         </form>
-        <div *ngIf="ordersConfirmed" class="confirmation-message">
-          <p>Bestellungen wurden bestätigt</p>
-        </div>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Überprüfung</ng-template>

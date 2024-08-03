@@ -4,74 +4,74 @@
       <mat-step>
         <ng-template matStepLabel>Bestellübersicht</ng-template>
         <div class="table-container">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-              <!-- Index Column -->
-              <ng-container matColumnDef="index">
-                <th mat-header-cell *matHeaderCellDef>#</th>
-                <td mat-cell *matCellDef="let element; let i = index">
-                  {{ i + 1 }}
-                </td>
-              </ng-container>
-              <!-- Name Column -->
-              <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Name</th>
-                <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-              </ng-container>
-              <!-- Order Column -->
-              <ng-container matColumnDef="order">
-                <th mat-header-cell *matHeaderCellDef>Bestellung</th>
-                <td mat-cell *matCellDef="let element">{{ element.order }}</td>
-              </ng-container>
-              <!-- Restaurant Column -->
-              <ng-container matColumnDef="restaurant">
-                <th mat-header-cell *matHeaderCellDef>Restaurant</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.restaurant }}
-                </td>
-              </ng-container>
-              <!-- Price Column -->
-              <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef>Preis</th>
-                <td mat-cell *matCellDef="let element">
-                  <ng-container *ngIf="element.price; else editPrice">
-                    {{ element.price }}
-                  </ng-container>
-                  <ng-template #editPrice>
-                    <input
-                      matInput
-                      placeholder="Preis eingeben"
-                      type="number"
-                      (keyup.enter)="updatePrice(element, $event)"
-                    />
-                  </ng-template>
-                </td>
-              </ng-container>
-              <!-- Day Column -->
-              <ng-container matColumnDef="day">
-                <th mat-header-cell *matHeaderCellDef>Datum</th>
-                <td mat-cell *matCellDef="let element">{{ element.day }}</td>
-              </ng-container>
-              <!-- Time Column -->
-              <ng-container matColumnDef="time">
-                <th mat-header-cell *matHeaderCellDef>Zeit</th>
-                <td mat-cell *matCellDef="let element">{{ element.time }}</td>
-              </ng-container>
-              <!-- Paid Column -->
-              <ng-container matColumnDef="paid">
-                <th mat-header-cell *matHeaderCellDef>Bezahlt</th>
-                <td mat-cell *matCellDef="let element">{{ element.paid }}</td>
-              </ng-container>
-              <!-- Accompany Column -->
-              <ng-container matColumnDef="accompany">
-                <th mat-header-cell *matHeaderCellDef>Begleitung</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.accompany }}
-                </td>
-              </ng-container>
-              <!-- Header and Row Definitions -->
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <!-- Index Column -->
+            <ng-container matColumnDef="index">
+              <th mat-header-cell *matHeaderCellDef>#</th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                {{ i + 1 }}
+              </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            </ng-container>
+            <!-- Order Column -->
+            <ng-container matColumnDef="order">
+              <th mat-header-cell *matHeaderCellDef>Bestellung</th>
+              <td mat-cell *matCellDef="let element">{{ element.order }}</td>
+            </ng-container>
+            <!-- Restaurant Column -->
+            <ng-container matColumnDef="restaurant">
+              <th mat-header-cell *matHeaderCellDef>Restaurant</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.restaurant }}
+              </td>
+            </ng-container>
+            <!-- Price Column -->
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef>Preis</th>
+              <td mat-cell *matCellDef="let element">
+                <ng-container *ngIf="element.price; else editPrice">
+                  {{ element.price }}
+                </ng-container>
+                <ng-template #editPrice>
+                  <input
+                    matInput
+                    placeholder="Preis eingeben"
+                    type="number"
+                    (keyup.enter)="updatePrice(element, $event)"
+                  />
+                </ng-template>
+              </td>
+            </ng-container>
+            <!-- Day Column -->
+            <ng-container matColumnDef="day">
+              <th mat-header-cell *matHeaderCellDef>Datum</th>
+              <td mat-cell *matCellDef="let element">{{ element.day }}</td>
+            </ng-container>
+            <!-- Time Column -->
+            <ng-container matColumnDef="time">
+              <th mat-header-cell *matHeaderCellDef>Zeit</th>
+              <td mat-cell *matCellDef="let element">{{ element.time }}</td>
+            </ng-container>
+            <!-- Paid Column -->
+            <ng-container matColumnDef="paid">
+              <th mat-header-cell *matHeaderCellDef>Bezahlt</th>
+              <td mat-cell *matCellDef="let element">{{ element.paid }}</td>
+            </ng-container>
+            <!-- Accompany Column -->
+            <ng-container matColumnDef="accompany">
+              <th mat-header-cell *matHeaderCellDef>Begleitung</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.accompany }}
+              </td>
+            </ng-container>
+            <!-- Header and Row Definitions -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
         </div>
         <mat-paginator
           [pageSizeOptions]="[5, 10, 25, 100]"
@@ -106,6 +106,14 @@
           </button>
           <button mat-raised-button (click)="clearOrders()">
             <mat-icon>delete</mat-icon>Daten löschen
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="resetConfirmation()"
+          >
+            <mat-icon>refresh</mat-icon>
+            Bestätigung zurücksetzen
           </button>
         </div>
       </mat-step>
