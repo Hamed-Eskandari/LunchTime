@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {
@@ -15,7 +15,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { OrderStatusService } from '../services/order-status.service';
 
 @Component({
@@ -34,12 +34,13 @@ import { OrderStatusService } from '../services/order-status.service';
     MatSelectModule,
     CommonModule,
     RouterModule,
-    MatIconModule
+    MatIconModule,
   ],
 })
-export class OrderComponent {
+export class OrderComponent implements OnInit, OnDestroy {
   orderForm: FormGroup;
   ordersConfirmed: boolean = false;
+  timer: any;
   restaurants: string[] = [
     'Restaurant 1',
     'Restaurant 2',
@@ -49,7 +50,10 @@ export class OrderComponent {
   ];
   datePipe = new DatePipe('en-US');
 
-  constructor(private fb: FormBuilder,private orderStatusService: OrderStatusService) {
+  constructor(
+    private fb: FormBuilder,
+    private orderStatusService: OrderStatusService
+  ) {
     this.orderForm = this.fb.group({
       name: ['', Validators.required],
       order: ['', [Validators.required, Validators.maxLength(100)]],
@@ -73,6 +77,17 @@ export class OrderComponent {
     this.orderStatusService.ordersConfirmed$.subscribe((confirmed) => {
       this.ordersConfirmed = confirmed;
     });
+  }
+  ngOnInit() {
+    this.timer = setInterval(() => {
+      this.orderStatusService.checkAndResetConfirmationAt15();
+    }, 60000);
+  }
+
+  ngOnDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
   }
 
   checkPaidField() {
