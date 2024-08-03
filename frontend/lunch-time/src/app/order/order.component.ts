@@ -79,15 +79,15 @@ export class OrderComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit() {
-    this.timer = setInterval(() => {
-      this.orderStatusService.checkAndResetConfirmationAt15();
-    }, 60000);
+    // this.timer = setInterval(() => {
+    //   this.orderStatusService.checkAndResetConfirmationAt15();
+    // }, 60000);
   }
 
   ngOnDestroy() {
-    if (this.timer) {
-      clearInterval(this.timer);
-    }
+    // if (this.timer) {
+    //   clearInterval(this.timer);
+    // }
   }
 
   checkPaidField() {
