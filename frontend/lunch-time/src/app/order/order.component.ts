@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
+import { OrderStatusService } from '../services/order-status.service';
 
 @Component({
   selector: 'app-order',
@@ -38,6 +39,7 @@ import {MatIconModule} from '@angular/material/icon';
 })
 export class OrderComponent {
   orderForm: FormGroup;
+  ordersConfirmed: boolean = false;
   restaurants: string[] = [
     'Restaurant 1',
     'Restaurant 2',
@@ -47,7 +49,7 @@ export class OrderComponent {
   ];
   datePipe = new DatePipe('en-US');
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private orderStatusService: OrderStatusService) {
     this.orderForm = this.fb.group({
       name: ['', Validators.required],
       order: ['', [Validators.required, Validators.maxLength(100)]],
@@ -67,6 +69,9 @@ export class OrderComponent {
         priceControl?.clearValidators();
       }
       priceControl?.updateValueAndValidity();
+    });
+    this.orderStatusService.ordersConfirmed$.subscribe((confirmed) => {
+      this.ordersConfirmed = confirmed;
     });
   }
 

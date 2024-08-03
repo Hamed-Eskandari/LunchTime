@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
 import { AlertDialogComponent } from '../components/alert-dialog/alert-dialog.component';
+import { OrderStatusService } from '../services/order-status.service';
 
 @Component({
   selector: 'app-buyer',
@@ -61,7 +62,8 @@ export class BuyerComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private orderStatusService: OrderStatusService
   ) {
     this.firstFormGroup = this._formBuilder.group({});
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -103,6 +105,7 @@ export class BuyerComponent implements OnInit {
   finalizeOrders() {
     if (this.isBrowser) {
       localStorage.setItem('orders', JSON.stringify(this.orders));
+      this.orderStatusService.confirmOrders(); 
     }
   }
 

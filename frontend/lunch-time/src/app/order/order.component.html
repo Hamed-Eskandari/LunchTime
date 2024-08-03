@@ -77,12 +77,15 @@
             <button mat-raised-button routerLink="/">
               <mat-icon>arrow_back</mat-icon>Zurück
             </button>
-            <button mat-raised-button matStepperNext (click)="checkPaidField()">
+            <button mat-raised-button matStepperNext (click)="checkPaidField()" [disabled]="ordersConfirmed">
               Weiter
               <mat-icon>arrow_forward</mat-icon>
             </button>
           </div>
         </form>
+        <div *ngIf="ordersConfirmed" class="confirmation-message">
+          <p>Bestellungen wurden bestätigt</p>
+        </div>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Überprüfung</ng-template>
