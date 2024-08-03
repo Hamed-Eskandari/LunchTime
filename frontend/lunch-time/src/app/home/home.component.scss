@@ -6,8 +6,10 @@
 }
 
 h1 {
-  font-size: 1.2em;
+  font-size: 1.4em;
   margin-bottom: 20px;
+  color: var(--mdc-protected-button-label-text-color);
+  text-shadow: 1px 1px rgb(241, 197, 197);
 }
 
 ul {
