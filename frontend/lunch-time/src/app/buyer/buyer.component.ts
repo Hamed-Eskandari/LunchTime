@@ -105,22 +105,22 @@ export class BuyerComponent implements OnInit {
   finalizeOrders() {
     if (this.isBrowser) {
       localStorage.setItem('orders', JSON.stringify(this.orders));
-      this.orderStatusService.confirmOrders(); 
+      this.orderStatusService.confirmOrders();
     }
   }
 
   clearOrders() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: { message: 'Sind Sie sicher, dass Sie die Daten löschen möchten?' }
+      data: { message: 'Sind Sie sicher, dass Sie die Daten löschen möchten?' },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         localStorage.removeItem('orders');
         this.orders = [];
         this.dataSource.data = [];
         this.dialog.open(AlertDialogComponent, {
-          data: { message: 'Alle Daten wurden gelöscht.' }
+          data: { message: 'Alle Daten wurden gelöscht.' },
         });
       }
     });
@@ -143,5 +143,8 @@ export class BuyerComponent implements OnInit {
     const header = Object.keys(objArray[0]).join(',');
     const rows = objArray.map((obj) => Object.values(obj).join(','));
     return [header, ...rows].join('\r\n');
+  }
+  resetConfirmation() {
+    this.orderStatusService.resetConfirmation();
   }
 }
