@@ -15,11 +15,11 @@ export class OrderStatusService {
   resetConfirmation() {
     this.ordersConfirmedSource.next(false);
   }
-  checkAndResetConfirmationAt15() {
-    const now = new Date();
-    if (now.getHours() === 19 && now.getMinutes() === 0) {
-      this.resetConfirmation();
-    }
-  }
+  // checkAndResetConfirmationAt15() {
+  //   const now = new Date();
+  //   if (now.getHours() === 19 && now.getMinutes() === 0) {
+  //     this.resetConfirmation();
+  //   }
+  // }
 
 }
