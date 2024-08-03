@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="isBrowser">
   <mat-card>
     <mat-stepper linear>
       <mat-step [stepControl]="orderForm">

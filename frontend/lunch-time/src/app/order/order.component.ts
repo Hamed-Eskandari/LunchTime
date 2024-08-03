@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {
@@ -17,6 +23,7 @@ import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { OrderStatusService } from '../services/order-status.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-order',
@@ -40,7 +47,7 @@ import { OrderStatusService } from '../services/order-status.service';
 export class OrderComponent implements OnInit, OnDestroy {
   orderForm: FormGroup;
   ordersConfirmed: boolean = false;
-  timer: any;
+  isBrowser: boolean;
   restaurants: string[] = [
     'Restaurant 1',
     'Restaurant 2',
@@ -52,8 +59,10 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private orderStatusService: OrderStatusService
+    private orderStatusService: OrderStatusService,
+    @Inject(PLATFORM_ID) private platformId: any
   ) {
+    this.isBrowser = isPlatformBrowser(platformId);
     this.orderForm = this.fb.group({
       name: ['', Validators.required],
       order: ['', [Validators.required, Validators.maxLength(100)]],
@@ -74,14 +83,13 @@ export class OrderComponent implements OnInit, OnDestroy {
       }
       priceControl?.updateValueAndValidity();
     });
-    this.orderStatusService.ordersConfirmed$.subscribe((confirmed) => {
-      this.ordersConfirmed = confirmed;
-    });
   }
   ngOnInit() {
-    // this.timer = setInterval(() => {
-    //   this.orderStatusService.checkAndResetConfirmationAt15();
-    // }, 60000);
+    if (this.isBrowser) {
+      this.orderStatusService.ordersConfirmed$.subscribe((confirmed) => {
+        this.ordersConfirmed = confirmed;
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -113,7 +121,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   submitOrder() {
-    if (this.orderForm.valid) {
+    if (this.isBrowser && this.orderForm.valid) {
       const orders = JSON.parse(localStorage.getItem('orders') || '[]');
       const currentDate = new Date();
       const day = this.datePipe.transform(currentDate, 'dd.MM.yyyy');

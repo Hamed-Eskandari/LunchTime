@@ -145,6 +145,8 @@ export class BuyerComponent implements OnInit {
     return [header, ...rows].join('\r\n');
   }
   resetConfirmation() {
-    this.orderStatusService.resetConfirmation();
+    if (this.isBrowser) {
+      this.orderStatusService.resetConfirmation();
+    }
   }
 }
