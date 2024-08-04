@@ -148,5 +148,8 @@ export class BuyerComponent implements OnInit {
     if (this.isBrowser) {
       this.orderStatusService.resetConfirmation();
     }
+    this.dialog.open(AlertDialogComponent, {
+      data: { message: 'Bestellungen geöffnet' },
+    });
   }
 }
