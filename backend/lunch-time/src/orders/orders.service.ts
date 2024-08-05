@@ -12,13 +12,12 @@ export class OrdersService {
   ) {}
 
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
-    
     const order = new Order();
     order.name = createOrderDto.name;
     order.order = createOrderDto.order;
     order.restaurant = createOrderDto.restaurant;
     order.paid = createOrderDto.paid;
-    
+
     order.price = createOrderDto.price;
     order.accompany = createOrderDto.accompany;
     order.day = createOrderDto.day;
@@ -29,5 +28,8 @@ export class OrdersService {
 
   async findAll(): Promise<Order[]> {
     return this.orderRepository.find();
+  }
+  async deleteAll(): Promise<void> {
+    await this.orderRepository.clear();
   }
 }
