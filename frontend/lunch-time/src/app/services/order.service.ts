@@ -22,4 +22,11 @@ export class OrderService {
   deleteAllOrders(): Observable<void> {
     return this.http.delete<void>(this.apiUrl);
   }
+  updateOrder(id: number, order: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, order);
+  }
+
+  updateAllOrders(orders: any[]): Observable<any[]> {
+    return this.http.put<any[]>(this.apiUrl, orders);
+  }
 }

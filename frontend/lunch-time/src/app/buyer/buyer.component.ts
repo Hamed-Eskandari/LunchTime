@@ -99,8 +99,20 @@ export class BuyerComponent implements OnInit {
 
   updatePrice(element: any, event: any) {
     if (this.isBrowser) {
-      element.price = event.target.value;
-      localStorage.setItem('orders', JSON.stringify(this.orders));
+      const newPrice = event.target.value;
+
+      if (newPrice) {
+        element.price = newPrice;
+
+        this.orderService.updateOrder(element.id, element).subscribe(
+          (updatedOrder) => {
+            console.log('Order updated successfully:', updatedOrder);
+          },
+          (error) => {
+            console.error('Error updating order:', error);
+          }
+        );
+      }
     }
   }
 
@@ -112,10 +124,35 @@ export class BuyerComponent implements OnInit {
 
   finalizeOrders() {
     if (this.isBrowser) {
-      localStorage.setItem('orders', JSON.stringify(this.orders));
-      this.orderStatusService.confirmOrders();
+      // این کد آرایه جدیدی از سفارشات را که به‌روزرسانی شده‌اند ایجاد می‌کند
+      const updatedOrders = this.orders.map((order) => {
+        const inputElement = document.getElementById(`price-input-${order.id}`) as HTMLInputElement;
+        if (inputElement && inputElement.value) {
+          order.price = parseFloat(inputElement.value);
+        }
+        return order;
+      });
+  
+      // اطمینان حاصل کنید که حداقل یک سفارش به‌روز شده است
+      const hasPrice = updatedOrders.some((order) => order.price !== null && order.price !== undefined);
+  
+      if (hasPrice) {
+        this.orderService.updateAllOrders(updatedOrders).subscribe(
+          (updatedOrders) => {
+            console.log('All orders updated successfully:', updatedOrders);
+            this.orderStatusService.confirmOrders();
+          },
+          (error) => {
+            console.error('Error updating all orders:', error);
+          }
+        );
+      } else {
+        this.orderStatusService.confirmOrders();
+      }
     }
   }
+  
+
 
   clearOrders() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

@@ -39,6 +39,7 @@
                 <ng-template #editPrice>
                   <input
                     matInput
+                    id="price-input-{{ element.id }}"
                     placeholder="Preis eingeben"
                     type="number"
                     (keyup.enter)="updatePrice(element, $event)"
@@ -46,6 +47,7 @@
                 </ng-template>
               </td>
             </ng-container>
+
             <!-- Day Column -->
             <ng-container matColumnDef="day">
               <th mat-header-cell *matHeaderCellDef>Datum</th>
