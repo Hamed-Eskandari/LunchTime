@@ -11,21 +11,13 @@ export class OrdersService {
     private ordersRepository: Repository<Order>,
   ) {}
 
-  async findAll(): Promise<Order[]> {
-    return this.ordersRepository.find();
-  }
-
-  async create(orderData: Partial<Order>): Promise<Order> {
-    const order = this.ordersRepository.create(orderData);
+  create(order: Order): Promise<Order> {
     return this.ordersRepository.save(order);
   }
 
-  async update(id: number, orderData: Partial<Order>): Promise<Order> {
-    await this.ordersRepository.update(id, orderData);
-    return this.ordersRepository.findOneBy({ id });
+  findAll(): Promise<Order[]> {
+    return this.ordersRepository.find();
   }
 
-  async delete(id: number): Promise<void> {
-    await this.ordersRepository.delete(id);
-  }
+  // Implement more methods as needed
 }

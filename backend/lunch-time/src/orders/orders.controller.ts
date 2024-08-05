@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { Order } from './order.entity/order.entity';
 import { OrdersService } from './orders.service';
 
@@ -7,23 +7,14 @@ import { OrdersService } from './orders.service';
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
+  @Post()
+  create(@Body() order: Order): Promise<Order> {
+    return this.ordersService.create(order);
+  }
+
   @Get()
-  async findAll(): Promise<Order[]> {
+  findAll(): Promise<Order[]> {
     return this.ordersService.findAll();
   }
 
-  @Post()
-  async create(@Body() orderData: Partial<Order>): Promise<Order> {
-    return this.ordersService.create(orderData);
-  }
-
-  @Put(':id')
-  async update(@Param('id') id: number, @Body() orderData: Partial<Order>): Promise<Order> {
-    return this.ordersService.update(id, orderData);
-  }
-
-  @Delete(':id')
-  async delete(@Param('id') id: number): Promise<void> {
-    return this.ordersService.delete(id);
-  }
 }
