@@ -6,26 +6,26 @@ export class Order {
   id: number;
 
   @Column()
-  name: string;
+  name: string; // Required field
 
   @Column()
-  order: string;
+  order: string; // Required field
 
   @Column()
-  restaurant: string;
+  restaurant: string; // Required field
 
   @Column('decimal', { nullable: true })
-  price: number;
+  price: number; // Optional field
+
+  @Column({ type: 'boolean', default: false })
+  paid: boolean; // Required field
+
+  @Column({ nullable: true, default: false })
+  accompany: boolean; // Optional field
 
   @Column()
-  paid: string;
-
-  @Column({ nullable: true })
-  accompany: string;
+  day: string; // Optional field
 
   @Column()
-  day: string;
-
-  @Column()
-  time: string;
+  time: string; // Optional field
 }
