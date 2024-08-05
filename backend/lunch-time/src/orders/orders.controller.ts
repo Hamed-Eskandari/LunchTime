@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Put, Param } from '@nestjs/common';
 import { CreateOrderDto } from './create-order.dto';
 import { Order } from './order.entity/order.entity';
 import { OrdersService } from './orders.service';
+import { UpdateOrderDto } from './update-order.dto';
 
 
 @Controller('orders')
@@ -22,5 +23,20 @@ export class OrdersController {
   async deleteAll(): Promise<void> {
     return this.ordersService.deleteAll();
   }
+  // Endpoint for updating a single order by ID
+  @Put(':id')
+  async updateOrder(
+    @Param('id') id: number,
+    @Body() updateOrderDto: UpdateOrderDto,
+  ): Promise<Order> {
+    return this.ordersService.updateOrder(id, updateOrderDto);
+  }
 
-}
+  // Endpoint for updating all orders
+  @Put()
+  async updateAllOrders(@Body() orders: Partial<CreateOrderDto>[]): Promise<Order[]> {
+    return this.ordersService.updateAllOrders(orders);
+  }
+  }
+
+
