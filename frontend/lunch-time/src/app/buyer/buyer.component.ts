@@ -20,6 +20,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
 import { AlertDialogComponent } from '../components/alert-dialog/alert-dialog.component';
 import { OrderStatusService } from '../services/order-status.service';
+import { OrderService } from '../services/order.service'; 
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-buyer',
@@ -63,7 +66,8 @@ export class BuyerComponent implements OnInit {
     private _formBuilder: FormBuilder,
     @Inject(PLATFORM_ID) private platformId: Object,
     private dialog: MatDialog,
-    private orderStatusService: OrderStatusService
+    private orderStatusService: OrderStatusService,
+    private orderService: OrderService
   ) {
     this.firstFormGroup = this._formBuilder.group({});
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -81,11 +85,15 @@ export class BuyerComponent implements OnInit {
 
   loadOrders() {
     if (this.isBrowser) {
-      const storedOrders = localStorage.getItem('orders');
-      if (storedOrders) {
-        this.orders = JSON.parse(storedOrders);
-        this.dataSource.data = this.orders;
-      }
+      this.orderService.getOrders().subscribe(
+        (orders) => {
+          this.orders = orders;
+          this.dataSource.data = this.orders; 
+        },
+        (error) => {
+          console.error('Error loading orders:', error);
+        }
+      );
     }
   }
 
@@ -116,12 +124,20 @@ export class BuyerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        localStorage.removeItem('orders');
-        this.orders = [];
-        this.dataSource.data = [];
-        this.dialog.open(AlertDialogComponent, {
-          data: { message: 'Alle Daten wurden gelöscht.' },
-        });
+   
+        this.orderService.deleteAllOrders().subscribe(
+          () => {
+            this.orders = [];
+            this.dataSource.data = []; 
+            this.dialog.open(AlertDialogComponent, {
+              data: { message: 'Alle Daten wurden gelöscht.' },
+            });
+          },
+          (error) => {
+            console.error('Error clearing orders:', error);
+   
+          }
+        );
       }
     });
   }
