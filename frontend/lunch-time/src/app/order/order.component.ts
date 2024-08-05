@@ -24,6 +24,8 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { OrderStatusService } from '../services/order-status.service';
 import { isPlatformBrowser } from '@angular/common';
+import { OrderService } from '../services/order.service';
+
 
 @Component({
   selector: 'app-order',
@@ -60,7 +62,8 @@ export class OrderComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private orderStatusService: OrderStatusService,
-    @Inject(PLATFORM_ID) private platformId: any
+    @Inject(PLATFORM_ID) private platformId: any,
+    private orderService: OrderService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     this.orderForm = this.fb.group({
@@ -122,11 +125,9 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   submitOrder() {
     if (this.isBrowser && this.orderForm.valid) {
-      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
       const currentDate = new Date();
       const day = this.datePipe.transform(currentDate, 'dd.MM.yyyy');
-
-      orders.push({
+      const orderData = {
         name: this.orderForm.get('name')?.value,
         order: this.orderForm.get('order')?.value,
         restaurant: this.orderForm.get('restaurant')?.value,
@@ -135,10 +136,20 @@ export class OrderComponent implements OnInit, OnDestroy {
         accompany: this.orderForm.get('accompany')?.value,
         time: currentDate.toLocaleTimeString(),
         day: day,
-      });
+      };
 
-      localStorage.setItem('orders', JSON.stringify(orders));
-      this.orderForm.reset();
+
+      this.orderService.createOrder(orderData).subscribe(
+        (response) => {
+          console.log('Order created successfully:', response);
+          this.orderForm.reset();
+          
+        },
+        (error) => {
+          console.error('Error creating order:', error);
+          
+        }
+      );
     } else {
       Object.keys(this.orderForm.controls).forEach((field) => {
         const control = this.orderForm.get(field);
