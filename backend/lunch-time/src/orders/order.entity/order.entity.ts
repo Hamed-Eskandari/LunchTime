@@ -17,11 +17,11 @@ export class Order {
   @Column('decimal', { nullable: true })
   price: number; // Optional field
 
-  @Column({ type: 'boolean', default: false })
-  paid: boolean; // Required field
+  @Column({ default: false })
+  paid: string; // Required field
 
   @Column({ nullable: true, default: false })
-  accompany: boolean; // Optional field
+  accompany: string; // Optional field
 
   @Column()
   day: string; // Optional field
