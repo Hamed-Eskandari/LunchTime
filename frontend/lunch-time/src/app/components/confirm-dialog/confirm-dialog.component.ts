@@ -9,7 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   standalone: true,
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.scss'],
-  imports: [CommonModule, MatButtonModule, MatDialogModule]
+  imports: [CommonModule, MatButtonModule, MatDialogModule],
 })
 export class ConfirmDialogComponent {
   constructor(

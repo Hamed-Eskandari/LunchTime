@@ -26,7 +26,6 @@ import { OrderStatusService } from '../services/order-status.service';
 import { isPlatformBrowser } from '@angular/common';
 import { OrderService } from '../services/order.service';
 
-
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -63,7 +62,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private orderStatusService: OrderStatusService,
     @Inject(PLATFORM_ID) private platformId: any,
-    private orderService: OrderService,
+    private orderService: OrderService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     this.orderForm = this.fb.group({
@@ -138,16 +137,13 @@ export class OrderComponent implements OnInit, OnDestroy {
         day: day,
       };
 
-
       this.orderService.createOrder(orderData).subscribe(
         (response) => {
           console.log('Order created successfully:', response);
           this.orderForm.reset();
-          
         },
         (error) => {
           console.error('Error creating order:', error);
-          
         }
       );
     } else {

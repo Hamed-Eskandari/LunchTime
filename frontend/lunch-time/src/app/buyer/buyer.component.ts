@@ -20,9 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
 import { AlertDialogComponent } from '../components/alert-dialog/alert-dialog.component';
 import { OrderStatusService } from '../services/order-status.service';
-import { OrderService } from '../services/order.service'; 
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { OrderService } from '../services/order.service';
 
 @Component({
   selector: 'app-buyer',
@@ -88,7 +86,7 @@ export class BuyerComponent implements OnInit {
       this.orderService.getOrders().subscribe(
         (orders) => {
           this.orders = orders;
-          this.dataSource.data = this.orders; 
+          this.dataSource.data = this.orders;
         },
         (error) => {
           console.error('Error loading orders:', error);
@@ -124,18 +122,20 @@ export class BuyerComponent implements OnInit {
 
   finalizeOrders() {
     if (this.isBrowser) {
-      // این کد آرایه جدیدی از سفارشات را که به‌روزرسانی شده‌اند ایجاد می‌کند
       const updatedOrders = this.orders.map((order) => {
-        const inputElement = document.getElementById(`price-input-${order.id}`) as HTMLInputElement;
+        const inputElement = document.getElementById(
+          `price-input-${order.id}`
+        ) as HTMLInputElement;
         if (inputElement && inputElement.value) {
           order.price = parseFloat(inputElement.value);
         }
         return order;
       });
-  
-      // اطمینان حاصل کنید که حداقل یک سفارش به‌روز شده است
-      const hasPrice = updatedOrders.some((order) => order.price !== null && order.price !== undefined);
-  
+
+      const hasPrice = updatedOrders.some(
+        (order) => order.price !== null && order.price !== undefined
+      );
+
       if (hasPrice) {
         this.orderService.updateAllOrders(updatedOrders).subscribe(
           (updatedOrders) => {
@@ -151,8 +151,6 @@ export class BuyerComponent implements OnInit {
       }
     }
   }
-  
-
 
   clearOrders() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -161,18 +159,16 @@ export class BuyerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-   
         this.orderService.deleteAllOrders().subscribe(
           () => {
             this.orders = [];
-            this.dataSource.data = []; 
+            this.dataSource.data = [];
             this.dialog.open(AlertDialogComponent, {
               data: { message: 'Alle Daten wurden gelöscht.' },
             });
           },
           (error) => {
             console.error('Error clearing orders:', error);
-   
           }
         );
       }

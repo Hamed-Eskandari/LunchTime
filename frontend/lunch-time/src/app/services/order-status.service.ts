@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderStatusService {
   private ordersConfirmedSource = new BehaviorSubject<boolean>(false);

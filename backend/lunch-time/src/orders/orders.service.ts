@@ -33,7 +33,10 @@ export class OrdersService {
   async deleteAll(): Promise<void> {
     await this.orderRepository.clear();
   }
-  async updateOrder(id: number, updateOrderDto: UpdateOrderDto): Promise<Order> {
+  async updateOrder(
+    id: number,
+    updateOrderDto: UpdateOrderDto,
+  ): Promise<Order> {
     const order = await this.orderRepository.findOne({ where: { id } });
 
     if (!order) {
@@ -47,7 +50,9 @@ export class OrdersService {
   async updateAllOrders(orders: Partial<CreateOrderDto>[]): Promise<Order[]> {
     const updatedOrders: Order[] = [];
     for (const updateOrderDto of orders) {
-      const order = await this.orderRepository.findOneBy({ id: updateOrderDto.id });
+      const order = await this.orderRepository.findOneBy({
+        id: updateOrderDto.id,
+      });
       if (order) {
         Object.assign(order, updateOrderDto);
         updatedOrders.push(await this.orderRepository.save(order));

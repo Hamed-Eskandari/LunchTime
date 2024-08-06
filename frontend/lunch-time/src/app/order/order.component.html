@@ -80,7 +80,12 @@
             <button mat-raised-button routerLink="/">
               <mat-icon>arrow_back</mat-icon>Zurück
             </button>
-            <button mat-raised-button matStepperNext (click)="checkPaidField()" [disabled]="ordersConfirmed">
+            <button
+              mat-raised-button
+              matStepperNext
+              (click)="checkPaidField()"
+              [disabled]="ordersConfirmed"
+            >
               Weiter
               <mat-icon>arrow_forward</mat-icon>
             </button>
@@ -90,7 +95,7 @@
       <mat-step>
         <ng-template matStepLabel>Überprüfung</ng-template>
         <div class="center-content">
-          <p style="color:#66b2b2"><b> Bestellübersicht</b></p>
+          <p style="color: #66b2b2"><b> Bestellübersicht</b></p>
           <p><b>Name:</b> {{ orderForm.controls["name"].value }}</p>
           <p><b>Bestellung:</b> {{ orderForm.controls["order"].value }}</p>
           <p><b>Restaurant:</b> {{ orderForm.controls["restaurant"].value }}</p>
@@ -116,7 +121,9 @@
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Bestellung abgeschlossen</ng-template>
-        <p style="color:#66b2b2"><b> Bestellung wurde erfolgreich aufgegeben.</b></p>
+        <p style="color: #66b2b2">
+          <b> Bestellung wurde erfolgreich aufgegeben.</b>
+        </p>
         <button mat-raised-button routerLink="/">
           <mat-icon>home</mat-icon>Zur Startseite
         </button>

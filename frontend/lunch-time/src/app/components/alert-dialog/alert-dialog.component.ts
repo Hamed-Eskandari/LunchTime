@@ -9,7 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   standalone: true,
   templateUrl: './alert-dialog.component.html',
   styleUrls: ['./alert-dialog.component.scss'],
-  imports: [CommonModule, MatButtonModule, MatDialogModule]
+  imports: [CommonModule, MatButtonModule, MatDialogModule],
 })
 export class AlertDialogComponent {
   constructor(
