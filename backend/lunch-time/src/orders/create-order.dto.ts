@@ -1,4 +1,4 @@
-import { IsString, IsBoolean, IsOptional, IsDecimal, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsString, IsOptional, IsDecimal, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateOrderDto {
   @IsNumber()
@@ -17,13 +17,13 @@ export class CreateOrderDto {
   @IsNotEmpty()
   restaurant: string;
 
-  @IsBoolean()
+  @IsString()
   @IsNotEmpty()
-  paid: boolean;
+  paid: string;
 
   @IsOptional()
   @IsString()
-  accompany?: boolean;
+  accompany?: string;
 
   @IsOptional()
   @IsString()
