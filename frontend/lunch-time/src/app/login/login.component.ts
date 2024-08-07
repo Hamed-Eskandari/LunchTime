@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -28,14 +29,9 @@ import { MatInputModule } from '@angular/material/input';
 export class LoginComponent {
   username: string = '';
   password: string = '';
-
-  private readonly validUsername: string = 'benutzer';
-  private readonly validPassword: string = 'passwort123';
-
-  // Error flag to show invalid credentials message
   loginFailed: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   isUsernameInvalid(): boolean {
     return this.username.trim().length === 0;
@@ -46,17 +42,10 @@ export class LoginComponent {
   }
 
   login() {
-    // Reset the error flag on each login attempt
     this.loginFailed = false;
 
-    if (
-      this.username === this.validUsername &&
-      this.password === this.validPassword
-    ) {
-      this.router.navigate(['/buyer']);
-    } else {
-      // Set the error flag if login fails
-      this.loginFailed = true;
+    if (this.authService.login(this.username, this.password)) {
+      this.router.navigate(['/home']);
     }
   }
 }

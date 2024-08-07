@@ -25,11 +25,34 @@
     </li>
   </ul>
   <div class="action">
-    <button mat-raised-button routerLink="/order" class="button">
-      <mat-icon>restaurant_menu</mat-icon>Ich bin Besteller
+    
+    <button
+      mat-raised-button
+      routerLink="/order"
+      class="button"
+      *ngIf="role === 'order' || role === 'buyer'"
+    >
+      <mat-icon>restaurant_menu</mat-icon> <span *ngIf="role === 'buyer'"> Ich bin Besteller</span>
+      <span *ngIf="role === 'order'"> Zur Bestellung</span>
     </button>
-    <button mat-raised-button routerLink="/login" class="button">
+    
+    <button
+      mat-raised-button
+      routerLink="/buyer"
+      class="button"
+      *ngIf="role === 'buyer'"
+    >
       <mat-icon>shopping_cart</mat-icon>Ich bin Einkäufer
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="button"
+      (click)="resetConfirmation()"
+      *ngIf="role === 'buyer'"
+    >
+      <mat-icon>refresh</mat-icon>
+      Bestätigung zurücksetzen
     </button>
   </div>
 </div>
