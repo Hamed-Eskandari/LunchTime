@@ -15,10 +15,12 @@ export class AuthService {
   }
 
   login(username: string, password: string): boolean {
+    const storedUsername = localStorage.getItem('username');
+    const storedPassword = localStorage.getItem('password');
     if (username === 'benutzer' && password === 'passwort123') {
       this.setUserRole('buyer');
       return true;
-    } else if (username === 'orderuser' && password === 'orderpass') {
+    } else if (username === storedUsername && password === storedPassword) {
       this.setUserRole('order');
       return true;
     }
