@@ -25,4 +25,7 @@ export class UsersService {
     const newUser = this.usersRepository.create(createUserDto);
     return this.usersRepository.save(newUser);
   }
+  async findByUsernameAndPassword(username: string, password: string): Promise<User | undefined> {
+    return this.usersRepository.findOne({ where: { username, password } });
+  }
 }
