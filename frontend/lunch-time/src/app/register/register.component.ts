@@ -46,7 +46,12 @@ export class RegisterComponent {
 
   register() {
     if (this.registerForm.valid) {
+      const username = this.registerForm.get('username')?.value;
+      const password = this.registerForm.get('password')?.value;
 
+     
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
     }
   }
 
