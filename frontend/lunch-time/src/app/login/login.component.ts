@@ -44,10 +44,15 @@ export class LoginComponent {
   login() {
     this.loginFailed = false;
 
-    if (this.authService.login(this.username, this.password)) {
-      this.router.navigate(['/home']);
-    } else {
-      this.loginFailed = true;
-    }
+    this.authService.login(this.username, this.password).subscribe(
+      (response) => {
+          this.authService.setUserRole(response.user.role);
+            this.router.navigate(['/home']);
+      },
+      (error) => {
+          console.error('Login failed', error);
+          this.loginFailed = true;
+      }
+   );
   }
 }

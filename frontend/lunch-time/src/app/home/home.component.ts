@@ -23,7 +23,7 @@ export class HomeComponent {
     private dialog: MatDialog,
     private authService: AuthService
   ) {
-    this.role = this.authService.getUserRole();
+    this.role = this.authService.getUserRole(); 
   }
 
   resetConfirmation() {
