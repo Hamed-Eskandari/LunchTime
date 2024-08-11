@@ -1,7 +1,6 @@
 import {
   Component,
   Inject,
-  OnDestroy,
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
@@ -45,7 +44,7 @@ import { OrderService } from '../services/order.service';
     MatIconModule,
   ],
 })
-export class OrderComponent implements OnInit, OnDestroy {
+export class OrderComponent implements OnInit {
   orderForm: FormGroup;
   ordersConfirmed: boolean = false;
   isBrowser: boolean;
@@ -94,11 +93,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    // if (this.timer) {
-    //   clearInterval(this.timer);
-    // }
-  }
+ 
 
   checkPaidField() {
     const paidControl = this.orderForm.get('paid');

@@ -1,4 +1,3 @@
-// src/users/users.controller.ts
 import { Controller, Post, Body, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './create-user.dto';
@@ -18,7 +17,7 @@ export class UsersController {
     );
 
     if (userExists) {
-      throw new BadRequestException('Username or email already exists');
+      throw new BadRequestException('Benutzername oder E-Mail existiert bereits');
     }
 
     return this.usersService.create(createUserDto);

@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepperModule, MatStepper } from '@angular/material/stepper';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -27,50 +29,36 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  private buyerTokenValue = 'TOKEN1234';
+  errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.registerForm = this.fb.group({
-      username: ['', [Validators.required, this.usernameExistsValidator.bind(this)]],
+      username: ['', [Validators.required]],
       password: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email, Validators.pattern('^[^@\\s]+@brockhaus\\.com$'), this.emailExistsValidator.bind(this)]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern('^[^@\\s]+@brockhaus\\.com$')]],
+      buyerToken: [''],
     });
   }
-  usernameExistsValidator(control: AbstractControl) {
-    const username = control.value;
-    
-        
-    const storedUsername = localStorage.getItem('username');
 
-    if (storedUsername && storedUsername === username) {
-      return { usernameExists: true };
-    }
-    return null;
-  }
-
-  emailExistsValidator(control: AbstractControl) {
-    const email = control.value;
-    const storedEmail = localStorage.getItem('email');
-
-    if (storedEmail && storedEmail === email) {
-      return { emailExists: true };
-    }
-    return null;
-  }
-
-  register() {
+  register(stepper: MatStepper) {
     if (this.registerForm.valid) {
-      const username = this.registerForm.get('username')?.value;
-      const password = this.registerForm.get('password')?.value;
-      const email = this.registerForm.get('email')?.value;
-
-
-     
-      localStorage.setItem('username', username);
-      localStorage.setItem('password', password);
-      localStorage.setItem('email', email);
-      
+      const { username, password, email, buyerToken } = this.registerForm.value;
+      const role = buyerToken === this.buyerTokenValue ? 'buyer' : 'order';
+      this.authService.register(username, password, email, role).subscribe(
+        response => {
+          console.log('Registration successful', response);
+          this.errorMessage = null;
+          stepper.next(); // Move to the next step if registration is successful
+        },
+        (error: HttpErrorResponse) => {
+          if (error.status === 400) {
+            this.errorMessage = 'Benutzername oder E-Mail existiert bereits';
+          } else {
+            this.errorMessage = 'Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.';
+          }
+        }
+      );
     }
   }
-
-
 }

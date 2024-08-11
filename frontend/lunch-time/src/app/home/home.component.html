@@ -32,7 +32,8 @@
       class="button"
       *ngIf="role === 'order' || role === 'buyer'"
     >
-      <mat-icon>restaurant_menu</mat-icon> <span *ngIf="role === 'buyer'"> Ich bin Besteller</span>
+      <mat-icon>restaurant_menu</mat-icon> 
+      <span *ngIf="role === 'buyer'"> Ich bin Besteller</span>
       <span *ngIf="role === 'order'"> Zur Bestellung</span>
     </button>
     
