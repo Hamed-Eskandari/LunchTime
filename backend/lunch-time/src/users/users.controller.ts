@@ -18,7 +18,7 @@ export class UsersController {
     );
 
     if (userExists) {
-      throw new BadRequestException('Username or email already exists');
+      throw new BadRequestException('Benutzername oder E-Mail existiert bereits');
     }
 
     return this.usersService.create(createUserDto);
