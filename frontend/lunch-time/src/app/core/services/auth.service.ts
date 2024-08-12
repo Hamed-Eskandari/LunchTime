@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { AuthResponse, LoginRequest, RegisterRequest } from '../../models/auth.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -20,21 +21,16 @@ export class AuthService {
     return this.userRole;
   }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
+  login(data: LoginRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, data).pipe(
       tap(response => {
         this.userRole = response.user.role;
       })
     );
-}
+  }
 
-  register(username: string, password: string, email: string, role: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, {
-      username,
-      password,
-      email,
-      role,
-    });
+  register(data: RegisterRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, data);
   }
 
   logout() {

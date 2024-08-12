@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { LoginRequest } from '../../models/auth.interfaces';
 
 @Component({
   selector: 'app-login',
@@ -43,8 +44,9 @@ export class LoginComponent {
 
   login() {
     this.loginFailed = false;
+    const loginData: LoginRequest = { username: this.username, password: this.password };
 
-    this.authService.login(this.username, this.password).subscribe(
+    this.authService.login(loginData).subscribe(
       (response) => {
           this.authService.setUserRole(response.user.role);
             this.router.navigate(['/home']);
