@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { AuthGuard } from './services/auth.guard';
-import { BuyerComponent } from './buyer/buyer.component';
-import { OrderComponent } from './order/order.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { BuyerComponent } from './pages/buyer/buyer.component';
+import { OrderComponent } from './pages/order/order.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },

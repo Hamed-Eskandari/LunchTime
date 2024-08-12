@@ -17,10 +17,11 @@ import { RouterModule } from '@angular/router';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
-import { AlertDialogComponent } from '../components/alert-dialog/alert-dialog.component';
-import { OrderStatusService } from '../services/order-status.service';
-import { OrderService } from '../services/order.service';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { AlertDialogComponent } from '../../shared/components/alert-dialog/alert-dialog.component';
+import { OrderStatusService } from '../../core/services/order-status.service';
+import { OrderService } from '../../core/services/order.service';
+import { Order } from '../../models/order.interface';
 
 @Component({
   selector: 'app-buyer',
@@ -42,7 +43,7 @@ import { OrderService } from '../services/order.service';
   ],
 })
 export class BuyerComponent implements OnInit {
-  orders: any[] = [];
+  orders: Order[] = [];
   displayedColumns: string[] = [
     'index',
     'name',
@@ -57,7 +58,7 @@ export class BuyerComponent implements OnInit {
   firstFormGroup: FormGroup;
   isBrowser: boolean;
 
-  dataSource = new MatTableDataSource<any>(this.orders);
+  dataSource = new MatTableDataSource<Order>(this.orders);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
@@ -95,14 +96,14 @@ export class BuyerComponent implements OnInit {
     }
   }
 
-  updatePrice(element: any, event: any) {
+  updatePrice(element: Order, event: any) {
     if (this.isBrowser) {
       const newPrice = event.target.value;
 
       if (newPrice) {
         element.price = newPrice;
 
-        this.orderService.updateOrder(element.id, element).subscribe(
+        this.orderService.updateOrder(element.id!, element).subscribe(
           (updatedOrder) => {
             console.log('Order updated successfully:', updatedOrder);
           },
@@ -202,3 +203,5 @@ export class BuyerComponent implements OnInit {
     });
   }
 }
+
+

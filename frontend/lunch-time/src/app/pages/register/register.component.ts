@@ -8,8 +8,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule, MatStepper } from '@angular/material/stepper';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RegisterRequest } from '../../models/auth.interfaces';
 
 @Component({
   selector: 'app-register',
@@ -45,7 +46,8 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       const { username, password, email, buyerToken } = this.registerForm.value;
       const role = buyerToken === this.buyerTokenValue ? 'buyer' : 'order';
-      this.authService.register(username, password, email, role).subscribe(
+      const registerData: RegisterRequest = { username, password, email, role };
+      this.authService.register(registerData).subscribe(
         response => {
           console.log('Registration successful', response);
           this.errorMessage = null;
