@@ -1,8 +1,8 @@
 import { Controller, Post, Body, BadRequestException, UnauthorizedException } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './create-user.dto';
-import { User } from './user.entity';
-import { LoginDto } from './login.dto';
+import { UsersService } from '../services/users.service';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { User } from '../entities/user.entity';
+import { LoginDto } from '../dto/login.dto';
 
 @Controller('user')
 export class UsersController {
