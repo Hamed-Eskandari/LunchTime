@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { OrderStatusService } from '../../core/services/order-status.service';
 import { isPlatformBrowser } from '@angular/common';
 import { OrderService } from '../../core/services/order.service';
+import { Order } from '../../models/order.interface';
 
 @Component({
   selector: 'app-order',
@@ -48,6 +49,7 @@ export class OrderComponent implements OnInit {
   orderForm: FormGroup;
   ordersConfirmed: boolean = false;
   isBrowser: boolean;
+  Order: Order[] = [];
   restaurants: string[] = [
     'Restaurant 1',
     'Restaurant 2',
@@ -120,8 +122,8 @@ export class OrderComponent implements OnInit {
   submitOrder() {
     if (this.isBrowser && this.orderForm.valid) {
       const currentDate = new Date();
-      const day = this.datePipe.transform(currentDate, 'dd.MM.yyyy');
-      const orderData = {
+      const day = this.datePipe.transform(currentDate, 'dd.MM.yyyy')|| '';
+      const orderData :Order= {
         name: this.orderForm.get('name')?.value,
         order: this.orderForm.get('order')?.value,
         restaurant: this.orderForm.get('restaurant')?.value,
