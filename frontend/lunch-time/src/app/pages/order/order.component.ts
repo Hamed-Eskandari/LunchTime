@@ -21,9 +21,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { OrderStatusService } from '../services/order-status.service';
+import { OrderStatusService } from '../../core/services/order-status.service';
 import { isPlatformBrowser } from '@angular/common';
-import { OrderService } from '../services/order.service';
+import { OrderService } from '../../core/services/order.service';
 
 @Component({
   selector: 'app-order',

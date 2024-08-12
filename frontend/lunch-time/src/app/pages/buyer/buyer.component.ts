@@ -17,10 +17,10 @@ import { RouterModule } from '@angular/router';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
-import { AlertDialogComponent } from '../components/alert-dialog/alert-dialog.component';
-import { OrderStatusService } from '../services/order-status.service';
-import { OrderService } from '../services/order.service';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { AlertDialogComponent } from '../../shared/components/alert-dialog/alert-dialog.component';
+import { OrderStatusService } from '../../core/services/order-status.service';
+import { OrderService } from '../../core/services/order.service';
 
 @Component({
   selector: 'app-buyer',

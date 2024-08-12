@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { OrderStatusService } from '../services/order-status.service';
-import { AuthService } from '../services/auth.service';
-import { AlertDialogComponent } from '../components/alert-dialog/alert-dialog.component';
+import { OrderStatusService } from '../../core/services/order-status.service';
+import { AuthService } from '../../core/services/auth.service';
+import { AlertDialogComponent } from '../../shared/components/alert-dialog/alert-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NgIf } from '@angular/common';
 
