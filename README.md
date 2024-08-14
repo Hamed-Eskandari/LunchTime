@@ -1,4 +1,5 @@
-
+# LunchTime
+### به‌روزرسانی `README.md`:
 
 ```markdown
 # Full-Stack Angular & NestJS Application
@@ -28,8 +29,8 @@ Make sure you have the following installed on your machine:
    ```bash
    cd backend/lunch-time
    npm install
-   cd ../frontend
-   npm install/lunch-time
+   cd ../frontend/lunch-time
+   npm install
    ```
 
 ## Running the Backend
@@ -64,6 +65,57 @@ The backend server will be running at `http://localhost:3000`.
 
 The frontend application will be running at `http://localhost:4200`.
 
+برای اضافه کردن توضیحات مربوط به نصب PWA روی هوم‌اسکرین در مرورگر، می‌توانید بخش تست PWA در فایل `README.md` را به‌روزرسانی کنید. این توضیحات نحوه نصب PWA بر روی هوم‌اسکرین دستگاه را نیز شامل می‌شود.
+
+### به‌روزرسانی بخش تست PWA در `README.md`:
+
+```markdown
+## Building and Running the PWA
+
+To build and run the Progressive Web App (PWA):
+
+1. Navigate to the `frontend` directory:
+
+   ```bash
+   cd frontend/lunch-time
+   ```
+
+2. Build the project for production with PWA support:
+
+   ```bash
+   ng build --configuration production
+   ```
+
+3. Start the PWA server:
+
+   If you have already set up the PWA server (using `express` and `http-proxy-middleware`), you can run the server with the following command:
+
+   ```bash
+   node server.js
+   ```
+
+   This will serve the PWA on port `8081`. You can access the PWA at:
+
+   ```
+   http://localhost:8081
+   ```
+
+4. **Testing PWA in Offline Mode**:
+
+   - Open the application in your browser.
+   - Go to the Developer Tools (`F12` or `Ctrl+Shift+I` on Windows/Linux, `Cmd+Option+I` on macOS).
+   - Go to the `Application` tab.
+   - In the `Service Workers` section, make sure that the Service Worker is registered and activated.
+   - To simulate offline mode, go to the `Network` tab and select `Offline` from the throttling dropdown.
+   - Open new tabs and refresh the pages to see if the PWA works offline on port `8081`.
+
+5. **Installing PWA on Home Screen**:
+
+   - When you open the application in your browser, you will see an install icon (usually a plus sign or a computer with an arrow) on the right side of the URL bar.
+   - Click on the install icon, and follow the prompts to add the application to your home screen.
+   - Once installed, you can open the application directly from your home screen as if it were a native app.
+
+```
 ## API Documentation
 
 Swagger UI is available for API documentation. After starting the backend, you can access the API documentation at:
