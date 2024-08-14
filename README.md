@@ -1,5 +1,4 @@
 # LunchTime
-### به‌روزرسانی `README.md`:
 
 ```markdown
 # Full-Stack Angular & NestJS Application
@@ -65,9 +64,6 @@ The backend server will be running at `http://localhost:3000`.
 
 The frontend application will be running at `http://localhost:4200`.
 
-برای اضافه کردن توضیحات مربوط به نصب PWA روی هوم‌اسکرین در مرورگر، می‌توانید بخش تست PWA در فایل `README.md` را به‌روزرسانی کنید. این توضیحات نحوه نصب PWA بر روی هوم‌اسکرین دستگاه را نیز شامل می‌شود.
-
-### به‌روزرسانی بخش تست PWA در `README.md`:
 
 ```markdown
 ## Building and Running the PWA
